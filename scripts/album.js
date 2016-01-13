@@ -28,6 +28,27 @@ var albumPicasso = {
      ]
  };
 
+ var albumWest = {
+     name: '808s & Heartbreak',
+     artist: 'Kanye West',
+     label: 'EM',
+     year: '2008',
+     albumArtUrl: 'assets/images/album_covers/808s_&_Heartbreak.png',
+     songs: [
+         { name: 'Say You Will', length: '6:17' },
+         { name: 'Welcome to Heartbreak', length: '4:22' },
+         { name: 'Heartless', length: '3:30'},
+         { name: 'Amazing', length: '3:58' },
+         { name: 'Love Lockdown', length: '4:30'},
+         { name: 'Paranoid', length: '4:37'},
+         { name: 'RoboCop', length: '4:34'},
+         { name: 'Street Lights', length: '3:09'},
+         { name: 'Bad News', length: '3:58'},
+         { name: 'See You in My Nightmares', length: '4:18'},
+         { name: 'Coldest Winter', length: '2:44'}
+     ]
+ };
+
 var createSongRow = function(songNumber, songName, songLength){
     var template =
         '<tr class="album-view-song-item">'
@@ -39,13 +60,13 @@ var createSongRow = function(songNumber, songName, songLength){
     return template;
 };
 
-var setCurrentAlbum = function(album){
      var albumTitle = document.getElementsByClassName('album-view-title')[0];
      var albumArtist = document.getElementsByClassName('album-view-artist')[0];
      var albumReleaseInfo = document.getElementsByClassName('album-view-release-info')[0];
      var albumImage = document.getElementsByClassName('album-cover-art')[0];
      var albumSongList = document.getElementsByClassName('album-view-song-list')[0];
- 
+
+var setCurrentAlbum = function(album){
      albumTitle.firstChild.nodeValue = album.name;
      albumArtist.firstChild.nodeValue = album.artist;
      albumReleaseInfo.firstChild.nodeValue = album.year + ' ' + album.label;
@@ -57,7 +78,17 @@ var setCurrentAlbum = function(album){
          albumSongList.innerHTML += createSongRow(i + 1, album.songs[i].name, album.songs[i].length);
      } 
 };
-
 window.onload = function() {
-     setCurrentAlbum(albumPicasso);
+    var index= 0; 
+    var allAlbums = [albumPicasso, albumMarconi, albumWest];
+    setCurrentAlbum(allAlbums[index]);
+    albumImage.addEventListener("click", function(event){
+        setCurrentAlbum(allAlbums[index]);
+        index++;
+        if(index == allAlbums.length){
+            index = 0;
+        }
+    });
  };
+
+
