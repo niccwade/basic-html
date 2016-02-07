@@ -7,6 +7,7 @@ var currentlyPlayingSongNumber = null;
 var currentSongFromAlbum = null;
  var currentSoundFile = null;
 var currentVolume = 80;
+var $playPauseSelector = $('.main-controls .play-pause'); 
 
 
 var $previousButton = $('.main-controls .previous');
@@ -20,7 +21,30 @@ $(document).ready(function () {
     $nextButton.click(function(){
         changeSong("next");
     });
+    $playPauseSelector.click(togglePlayFromPlayerBar);
 });
+
+var togglePlayFromPlayerBar = function() {
+    if(currentSoundFile.isPaused() && $($playPauseSelector).html() == playerBarPlayButton){
+        var currentlyPlayingCell = getSongNumberCell(currentlyPlayingSongNumber)
+        currentlyPlayingCell.html(pauseButtonTemplate);
+        $playPauseSelector.html(playerBarPauseButton);
+        currentSoundFile.play();
+    }else if(currentSoundFile && $($playPauseSelector).html() == playerBarPauseButton){
+        var currentlyPlayingCell = getSongNumberCell(currentlyPlayingSongNumber)
+        currentlyPlayingCell.html(playButtonTemplate);
+        $playPauseSelector.html(playerBarPlayButton);
+        currentSoundFile.pause();
+    }
+   //if song is paused and play button is clicked
+            //change song number cell to pause to pause button
+            //change HTML of playerbar to pause button
+            //play song
+    //else if song is playing and pause button is clicked
+            //change song number cell to pause to play button
+            //change HTML of playerbar to play button
+            //pause song
+};
 
 var setVolume = function(volume){
     if(currentSoundFile){
